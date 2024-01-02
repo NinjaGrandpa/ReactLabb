@@ -5,7 +5,7 @@ using ReactLabb.Domain.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
-var connectionString = builder.Configuration.GetConnectionString("scrap") ?? "Data Source=scrap.db";
+var connectionString = builder.Configuration.GetConnectionString("ScrapContext") ?? "Data Source=scrap.db";
 
 builder.Services.AddDbContext<ScrapContext>(options => options.UseSqlServer(connectionString));
 builder.Services.AddEndpointsApiExplorer();
