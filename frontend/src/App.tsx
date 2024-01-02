@@ -1,7 +1,7 @@
-import Message from "./Message";
+import Scrap from "./Scrap";
 
 function App() {
-  return <div><Message /></div>;
+  return <div><Scrap /></div>;
 }
 
 export default App;
