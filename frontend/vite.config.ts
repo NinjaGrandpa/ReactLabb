@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/scrap": {
-        target: "https://vfq3vv70-5100.euw.devtunnels.ms/",
+        target: "http://localhost:5046",
         changeOrigin: true,
         secure: false,
         ws: true,
