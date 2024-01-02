@@ -14,16 +14,19 @@ builder.Services.AddSwaggerGen(c =>
     c.SwaggerDoc("v1", new OpenApiInfo { Title = "Scrap API", Description = "Scrap times", Version = "v1"});
 });
 
-//var allowedOrigins = "";
+var myPolicy = "MyPolicy";
 
-//builder.Services.AddCors(options =>
-//{
-//    options.AddPolicy(name: allowedOrigins,
-//        builder =>
-//        {
-//            builder.WithOrigins("", "*");
-//        });
-//});
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: myPolicy,
+        builder =>
+        {
+            //builder.WithOrigins("", "*");
+            builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+        });
+});
 
 var app = builder.Build();
 
@@ -33,7 +36,7 @@ app.UseSwaggerUI(c =>
     c.SwaggerEndpoint("/swagger/v1/swagger.json", "Scrap API V1");
 });
 
-//app.UseCors(allowedOrigins);
+app.UseCors(myPolicy);
 
 app.MapGet("/", () => "Hello World!");
 
