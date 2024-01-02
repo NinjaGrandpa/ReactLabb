@@ -1,4 +1,4 @@
-import { FormEvent, SyntheticEvent, useState } from "react";
+import { SyntheticEvent, useState } from "react";
 import ScrapModel from "./models/ScrapModel";
 
 interface ScrapListProps {

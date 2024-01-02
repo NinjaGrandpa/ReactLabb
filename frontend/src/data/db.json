@@ -1,0 +1,19 @@
+{
+  "scrap": [
+    {
+      "id": 1,
+      "name": "Old Engine",
+      "description": "An old engine from a Nebula-Cruiser"
+    },
+    {
+      "id": 2,
+      "name": "Transflux Capacitor",
+      "description": "A Transflux Capacitor from some poor bastard's ship."
+    },
+    {
+      "id": 3,
+      "name": "Coffe Machine",
+      "description": "A coffe machine, model Insto-Coffe 3000"
+    }
+  ]
+}

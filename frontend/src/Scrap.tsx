@@ -3,49 +3,59 @@ import ScrapModel from "./models/ScrapModel";
 import ScrapList from "./ScrapList"
 
 const term = "Scrap"
+const API_URL = "/scrap";
+const headers = {
+    "Content-Type": "application/json"
+};
 
 function Scrap() {
     const [data, setData] = useState<ScrapModel[]>([]);
-    const [maxId, setMaxId] = useState(0);
+    const [error, setError] = useState(null);
 
     useEffect(() => {
         fetchScrapData();
     }, []);
 
     const fetchScrapData = () => {
-        const scrapData: ScrapModel[] = [
-            new ScrapModel({
-                id: 1, 
-                name: 'Old Engine', 
-                description: 'An old engine from a Nebula-Cruiser'}),
-            new ScrapModel({
-                id: 2, 
-                name: 'Transflux Capacitor', 
-                description: "A Transflux Capacitor from some poor bastard's ship."}),
-            new ScrapModel({
-                id: 3,
-                name: 'Coffe Machine',
-                description: 'A coffe machine, model Insto-Coffe 3000'})
-        ];
-        
-        setData(scrapData);
-        setMaxId(Math.max(...scrapData.map(scrap => scrap.id)));
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => setData(data))
+            .catch(error => setError(error));
     };
 
     const handleCreate = (item: any) => {
-        const newItem = {...item, id: data.length + 1 };
-        setData([...data, newItem]);
-        setMaxId(maxId + 1);
-    }
+        console.log(`add item: ${JSON.stringify(item)}`)
+        
+        fetch(API_URL, {
+            method: "POST",
+            headers,
+            body: JSON.stringify({name: item.name, description: item.description}),
+        })
+            .then(response => response.json())
+            .then(returnedItem => setData([...data, returnedItem]))
+            .catch(error => setError(error));
+    };
 
-    const handleUpdate = (item: any) => {
-        const updatedData = data.map(scrap => scrap.id === item.id ? item : scrap);
-        setData(updatedData);
+    const handleUpdate = (updatedItem: any) => {
+        
+        console.log(`update item: ${JSON.stringify(updatedItem)}`);
+
+        fetch(API_URL, {
+            method: "PUT",
+            headers,
+            body: JSON.stringify(updatedItem)
+        })
+            .then(() => setData(data.map(item => item.id === updatedItem.id ? updatedItem : item)))
+            .catch(error => setError(error));
     };
 
     const handleDelete = (id: number) => {
-        const updatedData = data.filter(scrap => scrap.id !== id);
-        setData(updatedData);
+        fetch(`${API_URL}/${id}`,{
+            method: "DELETE",
+            headers
+        })
+            .then(() => setData(data.filter(item => item.id !== id)))
+            .catch(error => console.error("Error deleting item:", error));
     };
 
     return(
